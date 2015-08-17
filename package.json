@@ -1,0 +1,23 @@
+{
+
+  "name": "LinearAlgebraJS",
+  "version": "0.0.1",
+  "author": "Wyman",
+  "description": "Linear algebra for JS",
+  "keywords": "linear algebra",
+  "respository": {
+    "type": "git",
+    "url": "https://github.com/voyagingmk/LinearAlgebraJS.git"
+  },
+  "contributors": [{
+    "name": "Wyman",
+    "email": "voyagingmk@gmail.com"
+  }],
+  "engines": {
+    "node": "0.12.x"
+  },
+  "private": false,
+  "dependencies": {
+    "tiny-browser-require": "1.0.0"
+  }
+}
