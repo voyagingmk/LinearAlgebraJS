@@ -35,6 +35,7 @@ var Matrix = Class.extend({
 		for (var i = 0, len = this.m_Len; i < len; i++) {
 			data1[i] += data2[i];
 		}
+		return this;
 	},
 	mimus: function(m) {
 		if (!this.isSameOrder(m)) {

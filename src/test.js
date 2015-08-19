@@ -19,3 +19,7 @@ m2.debug("m2:");
 var m3 = m1.multiply(m2);
 
 m3.debug("m3:");
+
+var m4 = m2.add(m3);
+
+m4.debug("m4:");
