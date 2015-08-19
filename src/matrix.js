@@ -119,6 +119,9 @@ var Matrix = Class.extend({
 		}
 		return result;
 	},
+	det: function(){ //determinant
+		
+	},
 	debug: function(msg) {
 		msg = (msg && msg + "\n") || "";
 		for (var r = 0; r < this.m_row; r++) {
