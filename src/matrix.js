@@ -51,8 +51,9 @@ var Matrix = Class.extend({
 	},
 	divide: function() {
 		if (typeof m == "number") {
-			if (m != 0)
+			if (m !== 0) {
 				return this.multiply(1 / m);
+			}
 		}
 	},
 	multiply: function(m) {
@@ -114,13 +115,22 @@ var Matrix = Class.extend({
 			return;
 		//TODO: below is simple algorithm
 		var result = this.clone();
-		for(var i = 0; i < n - 1; i++){
+		for (var i = 0; i < n - 1; i++) {
 			result = result.multiply(this);
 		}
 		return result;
 	},
-	det: function(){ //determinant
-		
+	inverse: function() {
+		if (!this.isSameOrder(m)) {
+			console.error("[Matrix.det] inconsistent order.");
+			return;
+		}
+	},
+	det: function() { //determinant
+		if (!this.isSameOrder(m)) {
+			console.error("[Matrix.det] inconsistent order.");
+			return;
+		}
 	},
 	debug: function(msg) {
 		msg = (msg && msg + "\n") || "";
