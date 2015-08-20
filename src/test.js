@@ -91,7 +91,25 @@ permutate44 = new Matrix([
 ], 4, 4);
 
 var result = m44.multiply(permutate44);
-result.debug("result:");
+result.debug("m44.multiply(permutate44) :");
 
 result = permutate44.multiply(m44);
-result.debug("result:");
+result.debug("permutate44.multiply(m44) :");
+
+var m8 = new Matrix([
+	3, 0, 3,
+	9, 1, 2,
+	6, 4, 3,
+], 3, 3);
+
+m8.debug("m8:");
+
+var pivot = m8.pivotize();
+pivot.debug("m8.pivot:");
+
+pivot.multiply(m8).debug("pivot * m8:");
+
+result = m8.LU();
+result.P.debug("LU of m8, P:");
+result.L.debug("LU of m8, L:");
+result.U.debug("LU of m8, U:");

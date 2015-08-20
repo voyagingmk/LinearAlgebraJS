@@ -8,13 +8,10 @@ def pivotize(m):
     """Creates the pivoting matrix for m."""
     n = len(m)
     ID = [[float(i == j) for i in xrange(n)] for j in xrange(n)]
-    pprint(ID, width=19)
-    for j in xrange(n):
-        print range(j, n)
-        row = max(xrange(j, n), key=lambda i: abs(m[i][j]))
-        print 'row',row,'j',j
-        if j != row:
-            ID[j], ID[row] = ID[row], ID[j]
+    for cur_row in xrange(n):
+        row = max(xrange(cur_row, n), key=lambda r: abs(m[r][cur_row]))
+        if cur_row != row:
+            ID[cur_row], ID[row] = ID[row], ID[cur_row]
     return ID
  
 def lu(A):
@@ -43,3 +40,4 @@ b = [[11,9,24,2],[1,5,2,6],[3,17,18,1],[2,5,7,1]]
 for part in lu(b):
     pprint(part)
     print
+
