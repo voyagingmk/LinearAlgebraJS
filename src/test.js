@@ -109,7 +109,7 @@ pivot.debug("m8.pivot:");
 
 pivot.multiply(m8).debug("pivot * m8:");
 
-result = m8.LU();
-result.P.debug("LU of m8, P:");
-result.L.debug("LU of m8, L:");
-result.U.debug("LU of m8, U:");
+result = m8.PLU();
+result.P.debug("PLU of m8, P:");
+result.L.debug("PLU of m8, L:");
+result.U.debug("PLU of m8, U:");

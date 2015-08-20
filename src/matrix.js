@@ -177,7 +177,7 @@ var Matrix = Class.extend({
 		return ID;
 
 	},
-	LU: function() { //LU Decomposition
+	PLU: function() { //PLU Decomposition
 		if (!this.isSquare()) {
 			console.error("[Matrix.pivotize] not Square.");
 			return;
@@ -186,22 +186,25 @@ var Matrix = Class.extend({
 		var L = this.newZeroMatrix(n);
 		var U = this.newZeroMatrix(n);
 		var A = this;
-		var P = this.pivotize();
+		var P = A.pivotize();
 		var PA = P.multiply(A);
+		var Ud = U.m_data;
+		var Ld = L.m_data;
+		var PAd = PA.m_data;
 
 		for (var j = 0; j < n; j++) {
-			L.m_data[j * n + j] = 1;
+			Ld[j * n + j] = 1;
 			for (var i = 0; i < j + 1; i++) {
 				var s1 = 0;
 				for (var k = 0; k < j; k++)
-					s1 += U.m_data[k * n + j] * L.m_data[i * n + k];
-				U.m_data[i * n + j] = PA.m_data[i * n + j] - s1;
+					s1 += Ud[k * n + j] * Ld[i * n + k];
+				Ud[i * n + j] = PAd[i * n + j] - s1;
 			}
 			for (var i = j; i < n; i++) {
 				var s2 = 0;
 				for (var k = 0; k < j; k++)
-					s2 += U.m_data[k * n + j] * L.m_data[i * n + k];
-				L.m_data[i * n + j] = (PA.m_data[i * n + j] - s2) / U.m_data[j * n + j];
+					s2 += Ud[k * n + j] * Ld[i * n + k];
+				Ld[i * n + j] = (PAd[i * n + j] - s2) / Ud[j * n + j];
 			}
 		}
 		return {
