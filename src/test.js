@@ -107,9 +107,22 @@ m8.debug("m8:");
 var pivot = m8.pivotize();
 pivot.debug("m8.pivot:");
 
+console.log("pivotSwapNum", pivot.pivotSwapNum());
+
 pivot.multiply(m8).debug("pivot * m8:");
 
-result = m8.PLU();
-result.P.debug("PLU of m8, P:");
-result.L.debug("PLU of m8, L:");
-result.U.debug("PLU of m8, U:");
+result = m8.LUP();
+result.P.debug("LUP of m8, P:");
+result.L.debug("LUP of m8, L:");
+result.U.debug("LUP of m8, U:");
+
+m44 = new Matrix([
+	1, 2, 3, 4,
+	1, 0, 1, 2,
+	3, -1, -1, 0,
+	1, 2, 0, -5,
+], 4, 4);
+
+m44.debug("m44:");
+
+console.log("m44.det:", m44.det());

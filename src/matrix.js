@@ -144,13 +144,44 @@ var Matrix = Class.extend({
 			return;
 		}
 	},
+	pivotSwapNum: function(m) {
+		if (!m)
+			m = this;
+		m = m.clone();
+		var n = m.m_col;
+		var data = m.m_data;
+		var num = 0;
+		for (var r = 0; r < n;) {
+			if (data[r * (n + 1)] != 0) {
+				r++;
+				continue;
+			} else {
+				while (data[r * (n + 1)] == 0) {
+					var c1, c2;
+					for (var c = 0; c < n; c++) {
+						if (data[r * n + c] > 0) {
+							data[r * n + c] = 0;
+							c1 = c;
+							break;
+						}
+					}
+					for (var c = 0; c < n; c++) {
+						if (data[c1 * n + c] > 0) {
+							data[c1 * n + c] = 0;
+							c2 = c;
+							break;
+						}
+					}
+					//exchage c1 and c2 column (just the two number 1)
+					data[c1 * n + c1] = 1;
+					data[r * n + c2] = 1;
+					num++;
+				}
+			}
+		}
+		return num;
+	},
 	pivotize: function() {
-		/* n = len(m)
-    for cur_row in xrange(n):
-        row = max(xrange(cur_row, n), key=lambda r: abs(m[r][cur_row]))
-        if cur_row != row:
-            ID[cur_row], ID[row] = ID[row], ID[cur_row]
-*/
 		if (!this.isSquare()) {
 			console.error("[Matrix.pivotize] not Square.");
 			return;
@@ -177,7 +208,7 @@ var Matrix = Class.extend({
 		return ID;
 
 	},
-	PLU: function() { //PLU Decomposition
+	LUP: function() { //LUP Decomposition
 		if (!this.isSquare()) {
 			console.error("[Matrix.pivotize] not Square.");
 			return;
@@ -214,10 +245,34 @@ var Matrix = Class.extend({
 		};
 	},
 	det: function() { //determinant
-		if (!this.isSameOrder(m)) {
-			console.error("[Matrix.det] inconsistent order.");
+		if (!this.isSquare()) {
+			console.error("[Matrix.det] not Square.");
 			return;
 		}
+		// A => 
+		// PA=LU => 
+		// det(A)=det(P^-1)*det(L)*det(U) =>
+		// det(A)=det(Pt)*det(L)*det(U) =>
+		// det(A)=((-1)^(swapsNum))*det(L)*det(U)
+		var A = this;
+		var result = A.LUP();
+		var P = result.P,
+			L = result.L,
+			U = result.U;
+		var Pt = P.transpose();
+		var detPt = Pt.pivotSwapNum() % 2 == 0 ? 1 : -1;
+		var detL = L.diagonalMul();
+		var detU = U.diagonalMul();
+		var detA = detPt * detL * detU;
+		return detA;
+	},
+	diagonalMul: function() {
+		var n = this.m_col;
+		var total = 1;
+		for (var r = 0; r < n; r++) {
+			total *= this.m_data[r * (n + 1)];
+		}
+		return total;
 	},
 	debug: function(msg) {
 		msg = (msg && msg + "\n") || "";
